@@ -1,8 +1,8 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
-import User from "./components/User/User";
+import User from "./components/User";
 import Home from "./components/Home/Home";
-import Navbar from "./components/Navbar/Navbar";
+import Navbar from "./components/Navbar";
 
 function App() {
   return (
