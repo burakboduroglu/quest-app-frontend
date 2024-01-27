@@ -44,7 +44,12 @@ function Post({userId, userName, title, text}) {
                 <CardHeader
                     avatar={
                         <Link to={`/users/${userId}`} className="link-text">
-                            <Avatar sx={{bgcolor: red[500]}} aria-label="recipe">
+                            <Avatar style={{
+                                background: "linear-gradient(95deg, #3110F4 10%, #2196F3 90%)",
+                                color: "white"
+                            }}
+                                    aria-label="recipe"
+                            >
                                 {userName.charAt(0).toUpperCase()}
                             </Avatar>
                         </Link>
