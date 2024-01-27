@@ -1,7 +1,7 @@
 import React from "react";
 import Post from "../Post/Post";
 import { useState, useEffect } from "react";
-import "./Home.css";
+import {Container} from "@mui/material";
 
 export default function Home() {
   const [error, setError] = useState(null);
@@ -29,12 +29,11 @@ export default function Home() {
     return <div>Loading...</div>;
   } else {
     return (
-      <div className="container">
-        <h1>Home</h1>
+      <Container fixed sx={{ display: "flex", alignItems: "center", backgroundColor: "#cfe8fc", flexDirection: "column", height: "100vh" }}>
         {posts.map((post) => (
-          <Post key={post.id} title={post.title} text={post.text} />
+          <Post key={post.id} userId={post.userId} userName={post.userName} title={post.title} text={post.text} />
         ))}
-      </div>
+      </Container>
     );
   }
 }

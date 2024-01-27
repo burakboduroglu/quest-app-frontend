@@ -1,0 +1,9 @@
+.title{
+    text-align: left;
+}
+
+.link-text{
+    text-decoration: none;
+    box-shadow: none;
+    color: white;
+}
