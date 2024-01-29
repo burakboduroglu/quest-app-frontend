@@ -5,27 +5,61 @@ import CardContent from "@mui/material/CardContent";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import {Link} from "react-router-dom";
-import {InputAdornment, OutlinedInput} from "@mui/material";
+import {Alert, InputAdornment, OutlinedInput, Snackbar} from "@mui/material";
 import Button from "@mui/material/Button";
 
-function PostForm({userId, userName}) {
+function PostForm({userId, userName, refreshPosts}) {
     const [title, setTitle] = React.useState("");
     const [text, setText] = React.useState("");
+    const [isPost, setIsPost] = React.useState(false);
+
+
+    const savePost = () => {
+        fetch("http://localhost:8080/posts", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                title: title,
+                userId: userId,
+                text: text
+            })
+        }).then(res => res.json()).catch((err) => console.log(err));
+    }
 
     const handleSubmit = () => {
-        console.log(title, ' *** ', text)
+        savePost();
+        setIsPost(true);
+        setText("");
+        setTitle("");
+        refreshPosts();
     }
 
     const handleTitle = (value) => {
         setTitle(value)
+        setIsPost(false);
     }
 
     const handleText = (value) => {
         setText(value)
+        setIsPost(false);
+    }
+
+    const handleClose = (event, reason) => {
+        if (reason === "clickaway") {
+            return;
+        }
+        setIsPost(false);
     }
 
     return (
         <div>
+            <Snackbar open={isPost} autoHideDuration={1500} onClose={handleClose}>
+                <Alert onClose={handleClose} severity="success">
+                    Post added successfully!
+                </Alert>
+            </Snackbar>
             <Card sx={{width: 800, marginTop: 3, textAlign: "left"}}>
                 <CardHeader
                     avatar={
@@ -45,6 +79,7 @@ function PostForm({userId, userName}) {
                             multiline placeholder="Title"
                             inputProps={{maxLength: 25}}
                             fullWidth
+                            value={isPost ? "" : title}
                             onChange={(i) => handleTitle(i.target.value)}
                         >
                         </OutlinedInput>}/>
@@ -55,6 +90,7 @@ function PostForm({userId, userName}) {
                             multiline placeholder="Text"
                             inputProps={{maxLength: 350}}
                             fullWidth
+                            value={isPost ? "" : text}
                             onChange={(i) => handleText(i.target.value)}
                             endAdornment={
                                 <InputAdornment position="end">

@@ -9,7 +9,7 @@ export default function Home() {
     const [isLoaded, setIsLoaded] = useState(false);
     const [posts, setPosts] = useState([]);
 
-    useEffect(() => {
+    const refreshPosts = async () => {
         fetch("http://localhost:8080/posts")
             .then((res) => res.json())
             .then(
@@ -22,7 +22,11 @@ export default function Home() {
                     setError(error);
                 }
             );
-    }, []);
+    }
+
+    useEffect(() => {
+        refreshPosts()
+    }, [posts]);
 
     if (error) {
         return <div>Error: {error.message}</div>;
@@ -35,11 +39,10 @@ export default function Home() {
                 flexWrap: "wrap",
                 alignItems: "center",
                 justifyContent: "center",
-
             }}>
-                <PostForm userId={"1"} userName={"post.userName"}/>
+                <PostForm userId={"1"} userName={"post.userName"} refreshPosts={refreshPosts}/>
                 {posts.map((post) => (
-                    <Post key={post.id} userId={post.userId} userName={post.userName} title={post.title} text={post.text}/>
+                    <Post key={post.id} userId={post.userId} userName={post.userName} title={post.title} text={post.text} />
                 ))}
             </Container>
         );
