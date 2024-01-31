@@ -38,7 +38,7 @@ function CommentForm({ userId, postId, userName }) {
       inputProps={{ maxLength: 250 }}
       fullWidth
       placeholder="Write a comment..."
-      sx={{ mt: 2 }}
+      sx={{ mt: 3 }}
       onChange={(event) => handleChange(event.target.value)}
       startAdornment={
         <InputAdornment position="start">
