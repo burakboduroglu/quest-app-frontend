@@ -9,6 +9,4 @@ Jjavascript:S6774"''postId' is missing in props validation(êÛ¦ë8Æ‰”øÕ1
 cjavascript:S1481!"@Remove the declaration of the unused 'setInitialMount' variable.(°µÒ­8Æ‰”øÕ1
 `javascript:S1854!"=Remove this useless assignment to variable "setInitialMount".(°µÒ­8Æ‰”øÕ1
 Sjavascript:S6774M"0'userName.charAt' is missing in props validation(Çğ¿µ8Æ‰”øÕ1
-gjavascript:S3358d"DExtract this nested ternary operation into an independent statement.(ƒ¦”8•ëÅøÕ1
-Mjavascript:S3796d"*Add a "return" statement to this callback.(ƒ¦”8•ëÅøÕ1
-mjavascript:S905e"FExpected an assignment or function call and instead saw an expression.(Û‰á®ıÿÿÿÿ8•ëÅøÕ1
+gjavascript:S3358d"DExtract this nested ternary operation into an independent statement.(ƒ¦”8Ó°”ùÕ1

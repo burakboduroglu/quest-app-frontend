@@ -11,8 +11,8 @@ import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CommentIcon from "@mui/icons-material/Comment";
 import {Link} from "react-router-dom";
-import {Container} from "@mui/material";
 import Comment from "../Comment/Comment";
+import CommentForm from "../Comment/CommentForm";
 
 const ExpandMore = styled((props) => {
     const {expand, ...other} = props;
@@ -28,7 +28,7 @@ function Post({userId, userName, title, text, postId}) {
     const [expanded, setExpanded] = React.useState(false);
     const [isLiked, setLiked] = React.useState(false);
     const [error, setError] = useState(null);
-    const [isLoaded, setIsLoaded] = useState(false);
+    const [isLoaded, setIsLoaded] = useState(true);
     const [comments, setComments] = useState([]);
     const [isInitialMount, setInitialMount] = useState(false);
 
@@ -64,7 +64,7 @@ function Post({userId, userName, title, text, postId}) {
 
     return (
         <div>
-            <Card sx={{width: 800, marginTop: 3, textAlign: "left"}}>
+            <Card sx={{width: 800, marginTop: 2, marginBottom: 1, textAlign: "left"}}>
                 <CardHeader
                     avatar={
                         <Link to={`/users/${userId}`} className="link-text">
@@ -95,13 +95,14 @@ function Post({userId, userName, title, text, postId}) {
                     </ExpandMore>
                 </CardActions>
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
-                    <Container fixed sx={{}}>
+                    <CardContent fixed>
                         {error ? "error" :
                             isLoaded ? comments.map((comment) => {
-                                <Comment key={1} userId={1} text={comment.text} userName={"USER"}/>
+                                return <Comment key={1} userId={1} text={comment.text} userName={"USER"}/>
                             }) : "Loading"
                         }
-                    </Container>
+                        <CommentForm userId={1} postId={postId} userName={"USER"}/>
+                    </CardContent>
                 </Collapse>
             </Card>
         </div>
