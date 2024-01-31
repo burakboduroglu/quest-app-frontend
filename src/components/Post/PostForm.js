@@ -13,7 +13,6 @@ function PostForm({userId, userName, refreshPosts}) {
     const [text, setText] = React.useState("");
     const [isPost, setIsPost] = React.useState(false);
 
-
     const savePost = () => {
         fetch("http://localhost:8080/posts", {
             method: "POST",

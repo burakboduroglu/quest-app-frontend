@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {styled} from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -8,13 +8,11 @@ import Collapse from "@mui/material/Collapse";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import {red} from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CommentIcon from "@mui/icons-material/Comment";
 import {Link} from "react-router-dom";
+import {Container} from "@mui/material";
+import Comment from "../Comment/Comment";
 
 const ExpandMore = styled((props) => {
     const {expand, ...other} = props;
@@ -26,17 +24,43 @@ const ExpandMore = styled((props) => {
     }),
 }));
 
-function Post({userId, userName, title, text}) {
+function Post({userId, userName, title, text, postId}) {
     const [expanded, setExpanded] = React.useState(false);
     const [isLiked, setLiked] = React.useState(false);
+    const [error, setError] = useState(null);
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [comments, setComments] = useState([]);
+    const [isInitialMount, setInitialMount] = useState(false);
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
+        refreshComments();
+        console.log(comments);
     };
 
     const handleLike = () => {
         setLiked(!isLiked);
     }
+
+    const refreshComments = async () => {
+        fetch(`http://localhost:8080/comments?postId=${postId}`)
+            .then((res) => res.json())
+            .then(
+                (result) => {
+                    setIsLoaded(true);
+                    setComments(result);
+                },
+                (error) => {
+                    setIsLoaded(true);
+                    setError(error);
+                }
+            );
+    }
+
+    useEffect(() => {
+        if (isInitialMount.current) isInitialMount.current = false;
+        else refreshComments();
+    }, [comments]);
 
     return (
         <div>
@@ -71,7 +95,13 @@ function Post({userId, userName, title, text}) {
                     </ExpandMore>
                 </CardActions>
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
-                    <CardContent/>
+                    <Container fixed sx={{}}>
+                        {error ? "error" :
+                            isLoaded ? comments.map((comment) => {
+                                <Comment key={1} userId={1} text={comment.text} userName={"USER"}/>
+                            }) : "Loading"
+                        }
+                    </Container>
                 </Collapse>
             </Card>
         </div>

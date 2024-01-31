@@ -42,7 +42,7 @@ export default function Home() {
             }}>
                 <PostForm userId={"1"} userName={"post.userName"} refreshPosts={refreshPosts}/>
                 {posts.map((post) => (
-                    <Post key={post.id} userId={post.userId} userName={post.userName} title={post.title} text={post.text} />
+                    <Post key={post.id} userId={post.userId} userName={post.userName} title={post.title} text={post.text} postId={post.id}/>
                 ))}
             </Container>
         );
